@@ -1,13 +1,14 @@
 package de.androbin.opengl;
 
 import static org.lwjgl.opengl.GL11.*;
-import java.util.concurrent.atomic.*;
+import de.androbin.opengl.camera.*;
 import org.lwjgl.*;
 import org.lwjgl.opengl.*;
 
 public abstract class App implements Renderable
 {
-	private volatile boolean closeRequested;
+	protected Camera			camera;
+	private volatile boolean	closeRequested;
 	
 	protected App()
 	{
@@ -58,11 +59,6 @@ public abstract class App implements Renderable
 		glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 	}
 	
-	public final boolean isCloseRequested()
-	{
-		return closeRequested;
-	}
-	
 	protected final void requestClose()
 	{
 		closeRequested = true;
@@ -72,7 +68,7 @@ public abstract class App implements Renderable
 	{
 		long lastFrame = Sys.getTime();
 		
-		while ( !Display.isCloseRequested() && !app.isCloseRequested() )
+		while ( !Display.isCloseRequested() && !app.closeRequested )
 		{
 			if ( Display.wasResized() )
 			{
@@ -97,13 +93,12 @@ public abstract class App implements Renderable
 	
 	public static void runParallel( final App app, final int fps, final long delay )
 	{
-		final AtomicBoolean running = new AtomicBoolean( true );
-		
 		final Thread updater = new Thread( () ->
 		{
-			long lastFrame = Sys.getTime();
+			app.update( delay / 1000f );
+			long lastFrame = System.currentTimeMillis();
 			
-			while ( running.get() )
+			while ( !app.closeRequested )
 			{
 				try
 				{
@@ -113,17 +108,18 @@ public abstract class App implements Renderable
 				{
 				}
 				
-				final long thisFrame = Sys.getTime();
-				app.update( (float) ( thisFrame - lastFrame ) / Sys.getTimerResolution() );
+				final long thisFrame = System.currentTimeMillis();
+				app.update( ( thisFrame - lastFrame ) / 1000f );
 				lastFrame = thisFrame;
 			}
-		} );
+		}, "OpenGL App Parallel Updater" );
 		
+		updater.setDaemon( true );
 		updater.start();
 		
 		long lastFrame = Sys.getTime();
 		
-		while ( running.get() )
+		while ( !app.closeRequested )
 		{
 			if ( Display.wasResized() )
 			{
@@ -140,8 +136,13 @@ public abstract class App implements Renderable
 			Display.update();
 			Display.sync( fps );
 			
-			running.set( !Display.isCloseRequested() && !app.isCloseRequested() );
+			if ( Display.isCloseRequested() )
+			{
+				app.closeRequested = true;
+			}
 		}
+		
+		updater.interrupt();
 		
 		try
 		{
@@ -159,5 +160,11 @@ public abstract class App implements Renderable
 	
 	protected void updateUI( final float delta )
 	{
+		final Camera camera = this.camera;
+		
+		if ( camera != null )
+		{
+			camera.update( delta );
+		}
 	}
 }
