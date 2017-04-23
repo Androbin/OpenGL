@@ -1,7 +1,6 @@
 package de.androbin.opengl;
 
 import static de.androbin.lwjgl.util.Vector2fUtil.*;
-import jdk.nashorn.internal.objects.annotations.*;
 import org.lwjgl.util.vector.*;
 
 public class Object2D
@@ -27,25 +26,21 @@ public class Object2D
 		return null;
 	}
 	
-	@ Getter
 	public final float getCenterX()
 	{
 		return pos.x + size.x * 0.5f;
 	}
 	
-	@ Getter
 	public final float getCenterY()
 	{
 		return pos.y + size.y * 0.5f;
 	}
 	
-	@ Getter
 	public final Vector2f getPos()
 	{
 		return pos;
 	}
 	
-	@ Getter
 	public final Vector2f getSize()
 	{
 		return size;
@@ -70,19 +65,16 @@ public class Object2D
 		return c;
 	}
 	
-	@ Setter
 	public final void setCenterX( final float centerX )
 	{
 		pos.x = centerX - size.x * 0.5f;
 	}
 	
-	@ Setter
 	public final void setCenterY( final float centerY )
 	{
 		pos.y = centerY - size.y * 0.5f;
 	}
 	
-	@ Setter
 	public final void setSize( final Vector2f size )
 	{
 		this.size = size;

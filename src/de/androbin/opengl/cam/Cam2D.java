@@ -1,11 +1,10 @@
-package de.androbin.opengl.camera;
+package de.androbin.opengl.cam;
 
 import static de.androbin.lwjgl.util.Vector2fUtil.*;
 import static org.lwjgl.opengl.GL11.*;
-import jdk.nashorn.internal.objects.annotations.*;
 import org.lwjgl.util.vector.*;
 
-public interface Camera2D extends Camera
+public interface Cam2D extends Cam
 {
 	@ Override
 	default void applyCamera()
@@ -20,10 +19,8 @@ public interface Camera2D extends Camera
 		glTranslatef( -270f, -270f, 0f );
 	}
 	
-	@ Getter
 	float getCameraRotation();
 	
-	@ Getter
 	Vector2f getCameraTranslation();
 	
 	default Vector2f getViewVector( final Vector2f dst )

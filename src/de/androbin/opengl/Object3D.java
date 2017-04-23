@@ -1,7 +1,6 @@
 package de.androbin.opengl;
 
 import static de.androbin.lwjgl.util.Vector3fUtil.*;
-import jdk.nashorn.internal.objects.annotations.*;
 import org.lwjgl.util.vector.*;
 
 public class Object3D
@@ -27,31 +26,26 @@ public class Object3D
 		return null;
 	}
 	
-	@ Getter
 	public final float getCenterX()
 	{
 		return pos.x + size.x * 0.5f;
 	}
 	
-	@ Getter
 	public final float getCenterY()
 	{
 		return pos.y + size.y * 0.5f;
 	}
 	
-	@ Getter
 	public final float getCenterZ()
 	{
 		return pos.z + size.z * 0.5f;
 	}
 	
-	@ Getter
 	public Vector3f getPos()
 	{
 		return pos;
 	}
 	
-	@ Getter
 	public final Vector3f getSize()
 	{
 		return size;
@@ -81,13 +75,11 @@ public class Object3D
 		return c;
 	}
 	
-	@ Setter
 	public void setPos( final Vector3f pos )
 	{
 		this.pos = pos;
 	}
 	
-	@ Setter
 	public void setSize( final Vector3f size )
 	{
 		this.size = size;

@@ -3,8 +3,8 @@ package de.androbin.opengl.util;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL14.*;
 import static org.lwjgl.opengl.GL30.*;
-import com.sun.xml.internal.ws.api.*;
 import java.io.*;
+import java.net.*;
 import org.lwjgl.opengl.*;
 import org.newdawn.slick.opengl.*;
 
@@ -31,9 +31,16 @@ public final class TextureUtil
 	
 	public static Texture loadTexture( final String path )
 	{
-		try
+		final URL res = ClassLoader.getSystemResource( "gfx/" + path );
+		
+		if ( res == null )
 		{
-			return TextureLoader.getTexture( null, ResourceLoader.class.getResourceAsStream( "/gfx/" + path ), GL_NEAREST );
+			return null;
+		}
+		
+		try ( final InputStream stream = res.openStream() )
+		{
+			return TextureLoader.getTexture( null, stream, GL_NEAREST );
 		}
 		catch ( final IOException e )
 		{

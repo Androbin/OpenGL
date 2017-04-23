@@ -1,14 +1,13 @@
-package de.androbin.opengl.camera;
+package de.androbin.opengl.cam;
 
+import static de.androbin.lwjgl.util.Vector3fUtil.*;
 import static de.androbin.math.util.floats.FloatMathUtil.*;
 import static de.androbin.opengl.util.MouseUtil.*;
-import static de.androbin.lwjgl.util.Vector3fUtil.*;
 import static org.lwjgl.opengl.GL11.*;
-import jdk.nashorn.internal.objects.annotations.*;
 import org.lwjgl.input.*;
 import org.lwjgl.util.vector.*;
 
-public interface Camera3D extends Camera
+public interface Cam3D extends Cam
 {
 	@ Override
 	default void applyCamera()
@@ -22,10 +21,8 @@ public interface Camera3D extends Camera
 		glTranslatef( -translation.x, -translation.y, -translation.z );
 	}
 	
-	@ Getter
 	Vector3f getCameraRotation();
 	
-	@ Getter
 	Vector3f getCameraTranslation();
 	
 	default Vector3f getViewVector( final Vector3f dst )

@@ -1,10 +1,10 @@
-package de.androbin.opengl.camera;
+package de.androbin.opengl.cam;
 
 import static de.androbin.lwjgl.util.Vector3fUtil.*;
 import static org.lwjgl.input.Keyboard.*;
 import org.lwjgl.util.vector.*;
 
-public class MightyCamera3D implements Camera3D
+public class MightyCam3D implements Cam3D
 {
 	protected final Vector3f	pos;
 	protected Vector3f			dir;
@@ -12,7 +12,7 @@ public class MightyCamera3D implements Camera3D
 	protected float				sensitivity;
 	protected float				speed;
 	
-	public MightyCamera3D( final Vector3f pos, final Vector3f dir, final float sensitivity, final float speed )
+	public MightyCam3D( final Vector3f pos, final Vector3f dir, final float sensitivity, final float speed )
 	{
 		this.pos = pos;
 		this.dir = dir;
@@ -33,6 +33,7 @@ public class MightyCamera3D implements Camera3D
 		return pos;
 	}
 	
+	@ Override
 	public boolean update( final float delta )
 	{
 		boolean update = updateCameraRotation( sensitivity );
