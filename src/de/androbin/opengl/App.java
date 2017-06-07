@@ -133,7 +133,7 @@ public abstract class App implements Renderable {
     Display.destroy();
   }
   
-  protected abstract void update( final float delta );
+  protected abstract void update( float delta );
   
   protected void updateUI( final float delta ) {
     final Cam camera = this.camera;
