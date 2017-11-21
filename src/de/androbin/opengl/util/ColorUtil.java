@@ -1,10 +1,15 @@
 package de.androbin.opengl.util;
 
+import java.awt.*;
 import org.lwjgl.opengl.*;
 import org.lwjgl.util.vector.*;
 
 public final class ColorUtil {
   private ColorUtil() {
+  }
+  
+  public static void glColor3f( final Color c ) {
+    GL11.glColor3f( c.getRed() / 255f, c.getGreen() / 255f, c.getBlue() / 255f );
   }
   
   public static void glColor3f( final Vector3f v ) {
