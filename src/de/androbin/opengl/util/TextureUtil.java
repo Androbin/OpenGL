@@ -3,6 +3,7 @@ package de.androbin.opengl.util;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL14.*;
 import static org.lwjgl.opengl.GL30.*;
+import de.androbin.io.*;
 import java.io.*;
 import java.net.*;
 import org.lwjgl.opengl.*;
@@ -26,7 +27,7 @@ public final class TextureUtil {
   }
   
   public static Texture loadTexture( final String path ) {
-    final URL res = ClassLoader.getSystemResource( "gfx/" + path );
+    final URL res = DynamicClassLoader.get().getResource( "gfx/" + path );
     
     if ( res == null ) {
       return null;
