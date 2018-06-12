@@ -5,7 +5,7 @@ import static org.lwjgl.opengl.GL14.*;
 import static org.lwjgl.opengl.GL30.*;
 import de.androbin.io.*;
 import java.io.*;
-import java.net.*;
+import java.nio.file.*;
 import org.lwjgl.opengl.*;
 import org.newdawn.slick.opengl.*;
 
@@ -27,13 +27,13 @@ public final class TextureUtil {
   }
   
   public static Texture loadTexture( final String path ) {
-    final URL res = DynamicClassLoader.get().getResource( "gfx/" + path );
+    final Path file = DynamicClassLoader.getPath( "gfx/" + path );
     
-    if ( res == null ) {
+    if ( file == null ) {
       return null;
     }
     
-    try ( final InputStream stream = res.openStream() ) {
+    try ( final InputStream stream = Files.newInputStream( file ) ) {
       return TextureLoader.getTexture( null, stream, GL_NEAREST );
     } catch ( final IOException e ) {
       return null;
